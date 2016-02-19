@@ -1,47 +1,43 @@
-sudo: false 
-2 
- 
-3 matrix: 
-4     include: 
-5         - os: linux 
-6           env: CABALVER=1.22 GHCVER=7.10.3 
-7           addons: 
-8               apt: 
-9                   packages: 
-10                       - ghc-7.10.3 
-11                       - cabal-install-1.22 
-12                   sources: hvr-ghc 
-13           before_install: 
-14               - PATH="/opt/ghc/$GHCVER/bin:$PATH" 
-15               - PATH="/opt/cabal/$CABALVER/bin:$PATH" 
-16               - PATH="$HOME/.cabal/bin:$PATH" 
-17               - export PATH 
-18               - cabal update 
-19 
- 
-20         - os: osx 
-21           before_install: 
-22               - brew update 
-23               - brew install ghc cabal-install 
-24               - cabal update 
-25               - PATH="$HOME/.cabal/bin:$PATH" 
-26               - export PATH 
-27 
- 
-28 install: 
-29     - env 
-30     - ghc --version 
-31     - cabal --version 
-32     - cabal install --only-dependencies 
-33 
- 
-34 script: 
-35     - cabal configure --enable-tests 
-36     - cabal build 
-37     - cabal test --show-details=always 
-38 
- 
-39 cache: 
-40     directories: 
-41         - $HOME/.cabal 
-42         - $HOME/.ghc 
+sudo: false
+
+matrix:
+    include:
+        - os: linux
+          env: CABALVER=1.22 GHCVER=7.10.3
+          addons:
+              apt:
+                  packages:
+                      - ghc-7.10.3
+                      - cabal-install-1.22
+                  sources: hvr-ghc
+          before_install:
+              - PATH="/opt/ghc/$GHCVER/bin:$PATH"
+              - PATH="/opt/cabal/$CABALVER/bin:$PATH"
+              - PATH="$HOME/.cabal/bin:$PATH"
+              - export PATH
+              - cabal update
+
+        - os: osx
+          before_install:
+              - brew update
+              - brew install ghc cabal-install
+              - cabal update
+              - PATH="$HOME/.cabal/bin:$PATH"
+              - export PATH
+
+install:
+    - env
+    - ghc --version
+    - cabal --version
+    - cabal install --only-dependencies
+
+script:
+    - cabal configure --enable-tests
+    - cabal build
+    - cabal test --show-details=always
+
+cache:
+    directories:
+        - $HOME/.cabal
+        - $HOME/.ghc
+
