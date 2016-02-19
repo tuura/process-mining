@@ -1,5 +1,5 @@
 # process-mining
-[![Build Status](https://travis-ci.org/jrbeaumont/process-mining.svg?branch=master)](https://travis-ci.org/jrbeaumont/process-mining)
+[![Build Status](https://travis-ci.org/tuura/process-mining.svg?branch=master)](https://travis-ci.org/tuura/process-mining)
 
 A library for process mining
 
