@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeFamilies #-}
-module Concurrency (
+module Tuura.Concurrency (
     ConcurrencyOracle, oracleMokhovCarmona, reduce, reduceLog
     ) where
 
@@ -8,8 +8,8 @@ import Data.List
 import Data.Set (Set)
 import qualified Data.Set as Set
 import qualified Data.Map as Map
-import Log
-import Graph
+import Tuura.Log
+import Tuura.Graph
 
 type ConcurrencyOracle a = a -> a -> Bool
 

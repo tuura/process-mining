@@ -1,4 +1,4 @@
-module Log (
+module Tuura.Log (
     Trace (..), Log (..), parse, split, dropSubtraces, canonicalise, events, persistentEvents
     ) where
 
