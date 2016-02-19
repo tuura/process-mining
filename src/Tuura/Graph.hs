@@ -1,11 +1,11 @@
 {-# LANGUAGE TypeFamilies #-}
-module Graph (
+module Tuura.Graph (
     Graph (..), fromList, vertices, clique, overlayList, connectList, printGraph,
     GraphExpr (..), printGraphExpr
     ) where
 
-import Relation (Relation (..))
-import qualified Relation as Relation
+import Tuura.Relation (Relation (..))
+import qualified Tuura.Relation as Relation
 import Data.Set (Set)
 import qualified Data.Set as Set
 

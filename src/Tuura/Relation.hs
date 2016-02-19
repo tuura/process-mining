@@ -1,4 +1,4 @@
-module Relation (
+module Tuura.Relation (
     Relation (..), empty, singleton, union, unions, complete
     ) where
 
