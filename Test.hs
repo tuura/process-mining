@@ -1,3 +1,4 @@
+import System.Exit (exitFailure)
 import Tuura.Concurrency
 import Data.List
 import Data.Set (Set)
@@ -17,18 +18,23 @@ toIntLog log1 = (intLog, Set.map a2i alphabet, i2a)
     i2a i    = Set.elemAt i alphabet
     intLog   = map (map a2i) log1
     
-findConcurrentPairs :: String -> IO()
-findConcurrentPairs inputLog = do
+findConcurrentPairs :: String -> [(String,String)] -> IO()
+findConcurrentPairs inputLog expPairs = do
     (logOriginal, alphabet, decode) <- fmap toIntLog $ readLog inputLog
-    let log    = dropSubtraces $ split logOriginal 
-        oracle = oracleMokhovCarmona log
-        events = Set.elems alphabet
+    let lg    = dropSubtraces $ split logOriginal 
+        oracle = oracleMokhovCarmona lg
+        evnts = Set.elems alphabet
         cache  = Map.fromSet (uncurry oracle) $
-                 Set.fromList [ (x, y) | x <- events, y <- events, x <= y ]
+                 Set.fromList [ (x, y) | x <- evnts, y <- evnts, x <= y ]
         co a b = cache Map.! (min a b, max a b)
 
-    putStrLn "Concurrent pairs:"
-    print [ (decode x, decode y) | (x:xs) <- tails events, y <- xs, x `co` y ]
+    putStr "Found concurrent pairs:    "
+    let foundPairs = [ (decode x, decode y) | (x:xs) <- tails evnts, y <- xs, x `co` y ]
+    print foundPairs
+    if expPairs /= foundPairs 
+        then do putStrLn "Test failure, expected and found concurrent pairs do not match"
+                exitFailure
+        else putStrLn "Test passed, expected and found concurrent pairs match"
     putStrLn ""
     putStrLn "______________"
     putStrLn ""
@@ -37,25 +43,40 @@ findConcurrentPairs inputLog = do
 
 main :: IO ()
 main = do
-    let log1 = "a b c a c b"
+
+    putStrLn ""
+
+    let log1 = "a b c\na c b"
+    let expPairs1 = [("b","c")]
     putStrLn "Log 1: "
     print log1    
-    findConcurrentPairs log1
+    putStr "Expected concurrent pairs: "
+    print expPairs1
+    findConcurrentPairs log1 expPairs1
 
-    let log2 = "a b c d a c b d"
+    let log2 = "a b c d\na c b d"
+    let expPairs2 = [("b","c")]
     putStrLn "Log 2: "
-    print log2
-    findConcurrentPairs log2
+    print log2    
+    putStr "Expected concurrent pairs: "
+    print expPairs2
+    findConcurrentPairs log2 expPairs2
     
-    let log3 = "a b c d a c b d a c d b a c b d"
+    let log3 = "a b c d\na c b d\na c d b\na c b d"
+    let expPairs3 = [("b","c"),("b","d")]
     putStrLn "Log 3: "
-    print log3
-    findConcurrentPairs log3
+    print log3    
+    putStr "Expected concurrent pairs: "
+    print expPairs3
+    findConcurrentPairs log3 expPairs3
     
-    let log4 = "a p q b a q p b a p q c a q p c"
-    putStrLn "Log 4: "
-    print log4
-    findConcurrentPairs log4
+    let log4 = "a p q b\na q p b\na p q c\na q p c"
+    let expPairs4 = [("p","q")]
+    putStr "Log 4: "
+    print log4    
+    putStr "Expected concurrent pairs: "
+    print expPairs4
+    findConcurrentPairs log4 expPairs4
     
     
 
