@@ -7,6 +7,7 @@ before_test:
   - 7z x cabal.tar.gz
   - 7z x cabal.tar
   - ren cabal-1.22.0.0-i386-unknown-mingw32.exe cabal.exe
+  - stack exec -- ghc --version
 
 
 test_script:
