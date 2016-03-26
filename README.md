@@ -64,7 +64,7 @@ This event log has no concurrency.
 
 The resulting Conditional Partial Order Graph algebraic representation of the concurrency will be found in the file `L2.cpog` in this directory.
 
-In this case, no concurrency is found as event e indicates the order between b and c. Whenever we observe event e in a trace we can be sure that b occurs before c in that trace.
+In this case, no concurrency is found as event e indicates the order between b and c. Whenever we observe event e in a trace we can be sure that b occurs before c in that trace. Thus, the resulting CPOG found in `L2.cpog` is the same as the event log. 
 
 ### Cabal testing
 
