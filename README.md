@@ -3,17 +3,17 @@
 
 This is a collection of algorithms and command line tools for process mining that use Conditional Partial Order Graphs (and more generally Parameterised Graphs) as the underlying modelling formalism.
 
-### Concurrency extraction with PGminer
+## Concurrency extraction with PGminer
 
 PGminer is a tool for extracting concurrency from event logs. It takes a set of event traces, detects potentially concurrent events, and produces a set of partial orders, to be further compressed into a Conditional Partial Order Graph.
 
-#### Get the sources
+### Getting the sources
 
 Navigate to a directory to store PGminer and use this command to clone the code:
 
 `git clone https://github.com/tuura/process-mining.git`
 
-#### Build PGminer
+### Building PGminer
 
 Enter the process-mining directory and compile PGminer using the following command:
 
