@@ -70,13 +70,15 @@ g2 = a -> b + b -> c + c -> e
 g3 = a -> c + b -> d + c -> b
 ```
 
-### Building and testing with Cabal
+## Building and testing with Cabal
 
-#### Build
+You can build and test the library using Cabal. We intend to release the library on Hackage in the near future.
+
+### Build
 
 	cabal build
 
-#### Test
+### Test
 
 	cabal test --show-details=always
 
