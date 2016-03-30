@@ -82,3 +82,8 @@ You can build and test the library using Cabal. We intend to release the library
 
 	cabal test --show-details=always
 
+### Run PGminer
+
+	cabal run pgminer -- eventLog.tr
+
+`eventLog.tr` can be replaced by any event log you wish to extract the concurrency from. Arguments for PGminer, such as `-split` or the file path should be placed after the `--` in this command, in order to differentiate arguments for cabal from arguments for PGminer. 
