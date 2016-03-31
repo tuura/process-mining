@@ -72,7 +72,7 @@ g3 = a -> c + b -> d + c -> b
 
 ## Building and testing with Cabal
 
-You can build and test the library using Cabal. We intend to release the library on Hackage in the near future.
+You can build the library and PGminer using Cabal. We intend to release the sources on Hackage in the near future.
 
 ### Build
 
@@ -84,6 +84,6 @@ You can build and test the library using Cabal. We intend to release the library
 
 ### Run PGminer
 
-	cabal run pgminer -- eventLog.tr
+	cabal run pgminer -- file.log
 
-`eventLog.tr` can be replaced by any event log you wish to extract the concurrency from. Arguments for PGminer, such as `-split` or the file path should be placed after the `--` in this command, in order to differentiate arguments for cabal from arguments for PGminer. 
+Here `file.log` is an event log you wish to extract the concurrency from. Other arguments for PGminer, such as `-split` or the output file path should be placed after the `--` separator, in order to differentiate arguments for Cabal from arguments for PGminer. 
