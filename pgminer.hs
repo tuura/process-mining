@@ -45,13 +45,13 @@ toIntLog log = (intLog, Set.map a2i alphabet, i2a)
 data Options = Options
     { optSplit    :: Bool
     , optInputLog :: FilePath
-    , optOutput   :: Maybe FilePath
+    , optOutput   :: FilePath
     } deriving Show
 
 defaultOptions    = Options
     { optSplit    = False
     , optInputLog = ""
-    , optOutput   = Nothing
+    , optOutput   = ""
     }
 
 options :: [OptDescr (Options -> IO Options)]
@@ -60,14 +60,13 @@ options =
         (NoArg (\ opts -> do
                    return opts { optSplit = True }))
         "Repeat events are set as separate as new events"
-    , Option ['i']     []
+    , Option ['i']     ["input"]
         (ReqArg (\ f opts -> do
                     return opts { optInputLog = optInputLog opts ++ f }) "FILE")
         "Input event log"
     , Option ['o']     ["output"]
-        (OptArg ((\ f opts -> do
-                    return opts { optOutput = Just f }) . fromMaybe "FILE")
-                "FILE")
+        (ReqArg (\ f opts -> do
+                    return opts { optOutput = optOutput opts ++ f }) "FILE")
         "Optional output .cpog file"
     ]
 
@@ -76,15 +75,20 @@ parseArgs = do
   argv <- getArgs
   progName <- getProgName
   let header = "Usage: " ++ progName ++ " [OPTION...]"
-  case getOpt Permute (options) argv of
+  let helpMessage = usageInfo header options
+  case getOpt RequireOrder (options) argv of
     (opts, [], []) -> foldlM (flip id) defaultOptions opts
+    (_, nots, _) -> do 
+        putStrLn "Unrecognised command"
+        ioError (userError (concat nots))
     (_, _, errs) -> ioError (userError (concat errs))
-
 
 main :: IO ()
 main = do
     options <- parseArgs
-    let [filename, result] = [optInputLog options] ++ [filename `replaceExtension` "cpog"]
+    let [filename, result] = [optInputLog options] ++ if optOutput options == ""
+            then [filename `replaceExtension` "cpog"]
+            else [optOutput options]
     (logOriginal, alphabet, decode) <- fmap toIntLog $ readLog filename
     let log    = if optSplit options then dropSubtraces $ split logOriginal else logOriginal
         oracle = oracleMokhovCarmona log
