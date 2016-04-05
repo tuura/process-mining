@@ -20,7 +20,8 @@ library
     exposed-modules:  Tuura.Concurrency,
                       Tuura.Graph,
                       Tuura.Log,
-                      Tuura.Relation
+                      Tuura.Relation,
+                      Tuura.CmdLineFlags
     build-depends:    base >= 4.7 && < 5,
                       array == 0.5.*,
                       containers == 0.5.*

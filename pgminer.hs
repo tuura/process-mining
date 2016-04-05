@@ -4,15 +4,10 @@ import Data.Set (Set)
 import qualified Data.Set as Set
 import Data.Map (Map)
 import qualified Data.Map as Map
-import Data.Maybe
-import Data.Foldable
 import Tuura.Graph
 import Tuura.Log
-import System.Environment
+import Tuura.CmdLineFlags
 import System.FilePath
-import System.Console.GetOpt
-import System.Exit
-import System.IO
 
 
 readLog :: FilePath -> IO (Log String)
@@ -35,62 +30,15 @@ toIntLog log = (intLog, Set.map a2i alphabet, i2a)
     i2a i    = Set.elemAt i alphabet
     intLog   = map (map a2i) log
 
---getSplit :: [String] -> ([String], Bool)
---getSplit [] = ([], False)
---getSplit (s:ss)
---    | s == "-split" = (ss  , True )
---    | otherwise     = (s:ss, False)
-
-
-data Options = Options
-    { optSplit    :: Bool
-    , optInputLog :: FilePath
-    , optOutput   :: FilePath
-    } deriving Show
-
-defaultOptions    = Options
-    { optSplit    = False
-    , optInputLog = ""
-    , optOutput   = ""
-    }
-
-options :: [OptDescr (Options -> IO Options)]
-options =
-    [ Option ['s']     ["split"]
-        (NoArg (\ opts -> do
-                   return opts { optSplit = True }))
-        "Repeat events are set as separate as new events"
-    , Option ['i']     ["input"]
-        (ReqArg (\ f opts -> do
-                    return opts { optInputLog = optInputLog opts ++ f }) "FILE")
-        "Input event log"
-    , Option ['o']     ["output"]
-        (ReqArg (\ f opts -> do
-                    return opts { optOutput = optOutput opts ++ f }) "FILE")
-        "Optional output .cpog file"
-    ]
-
-parseArgs :: IO Options
-parseArgs = do
-  argv <- getArgs
-  progName <- getProgName
-  let header = "Usage: " ++ progName ++ " [OPTION...]"
-  let helpMessage = usageInfo header options
-  case getOpt RequireOrder (options) argv of
-    (opts, [], []) -> foldlM (flip id) defaultOptions opts
-    (_, nots, _) -> do 
-        putStrLn "Unrecognised command"
-        ioError (userError (concat nots))
-    (_, _, errs) -> ioError (userError (concat errs))
 
 main :: IO ()
 main = do
     options <- parseArgs
-    let [filename, result] = [optInputLog options] ++ if optOutput options == ""
+    let [filename, result] = [optInput options] ++ if optOutput options == ""
             then [filename `replaceExtension` "cpog"]
             else [optOutput options]
     (logOriginal, alphabet, decode) <- fmap toIntLog $ readLog filename
-    let log    = if optSplit options then dropSubtraces $ split logOriginal else logOriginal
+    let log    = if (optSplit options) then dropSubtraces $ split logOriginal else logOriginal
         oracle = oracleMokhovCarmona log
         events = Set.elems alphabet
         cache  = Map.fromSet (uncurry oracle) $
