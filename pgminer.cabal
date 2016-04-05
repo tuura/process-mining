@@ -26,17 +26,17 @@ library
                       containers == 0.5.*
     default-language: Haskell2010
     other-extensions: TypeFamilies
-    GHC-options:      -Wall -fwarn-tabs
-    
+    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
+
 test-suite pgminer-test
     type:             exitcode-stdio-1.0
     main-is:          Test.hs
-    build-depends:    base >= 4.7 && < 5,  
+    build-depends:    base >= 4.7 && < 5,
                       pgminer,
                       containers == 0.5.*
     other-extensions: TypeFamilies
     default-language: Haskell2010
-    GHC-options:      -Wall -fwarn-tabs
+    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
 
 executable pgminer
     main-is:          pgminer.hs
@@ -47,4 +47,4 @@ executable pgminer
                       containers == 0.5.*
     other-extensions: TypeFamilies
     default-language: Haskell2010
-    GHC-options:      -Wall -fwarn-tabs
+    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
