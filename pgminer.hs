@@ -2,7 +2,6 @@ import Tuura.Concurrency
 import Data.List
 import Data.Set (Set)
 import qualified Data.Set as Set
-import Data.Map (Map)
 import qualified Data.Map as Map
 import Tuura.Graph
 import Tuura.Log
@@ -19,7 +18,7 @@ writeResult filename expressions = do
     let report = unlines $ addIds expressions
     writeFile filename report
   where
-    addIds = zipWith (\n s -> "g" ++ show n ++ " = " ++ s) [1..]
+    addIds = zipWith (\n s -> "p" ++ show n ++ " = " ++ s) [(1 :: Int)..]
 
 toIntLog :: Log String -> (Log Int, Set Int, Int -> String)
 toIntLog log = (intLog, Set.map a2i alphabet, i2a)
