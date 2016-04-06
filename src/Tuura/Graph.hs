@@ -6,8 +6,6 @@ module Tuura.Graph (
 
 import Tuura.Relation (Relation (..))
 import qualified Tuura.Relation as Relation
-import Data.Set (Set)
-import qualified Data.Set as Set
 
 class Graph g where
     type Vertex g
