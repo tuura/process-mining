@@ -20,9 +20,10 @@ library
     exposed-modules:  Tuura.Concurrency,
                       Tuura.Graph,
                       Tuura.Log,
+                      Tuura.Macro,
                       Tuura.Relation
-    build-depends:    base >= 4.7 && < 5,
-                      array == 0.5.*,
+    build-depends:    array == 0.5.*,
+                      base >= 4.7 && < 5,
                       containers == 0.5.*
     default-language: Haskell2010
     other-extensions: TypeFamilies
@@ -32,8 +33,8 @@ test-suite pgminer-test
     type:             exitcode-stdio-1.0
     main-is:          Test.hs
     build-depends:    base >= 4.7 && < 5,
-                      pgminer,
-                      containers == 0.5.*
+                      containers == 0.5.*,
+                      pgminer
     other-extensions: TypeFamilies
     default-language: Haskell2010
     GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
@@ -41,10 +42,18 @@ test-suite pgminer-test
 executable pgminer
     main-is:          pgminer.hs
     build-depends:    base >= 4.7 && < 5,
-                      pgminer,
+                      containers == 0.5.*,
                       filepath,
-                      array == 0.5.*,
-                      containers == 0.5.*
+                      pgminer
+    other-extensions: TypeFamilies
+    default-language: Haskell2010
+    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
+
+executable macroscope
+    main-is:          macroscope.hs
+    build-depends:    base >= 4.7 && < 5,
+                      containers == 0.5.*,
+                      pgminer
     other-extensions: TypeFamilies
     default-language: Haskell2010
     GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
