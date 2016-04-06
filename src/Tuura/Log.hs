@@ -1,5 +1,6 @@
 module Tuura.Log (
-    Trace (..), Log (..), parse, split, dropSubtraces, canonicalise, events, persistentEvents
+    Trace, Log, parse, split, dropSubtraces, canonicalise,
+    events, persistentEvents
     ) where
 
 import Data.Function
@@ -7,10 +8,7 @@ import Data.List
 import Data.Ord
 import Data.Set (Set)
 import qualified Data.Set as Set
-import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
-import Data.IntMap.Strict (IntMap)
-import qualified Data.IntMap.Strict as IntMap
 
 type Trace e = [e]
 type Log   e = [Trace e]

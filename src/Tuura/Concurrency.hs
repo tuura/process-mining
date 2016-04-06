@@ -3,11 +3,7 @@ module Tuura.Concurrency (
     ConcurrencyOracle, oracleMokhovCarmona, reduce, reduceLog
     ) where
 
-import Data.Array
 import Data.List
-import Data.Set (Set)
-import qualified Data.Set as Set
-import qualified Data.Map as Map
 import Tuura.Log
 import Tuura.Graph
 

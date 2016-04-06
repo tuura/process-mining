@@ -15,7 +15,7 @@ addId expressions = do
     let report = unlines $ addIds expressions
     return report
   where
-    addIds = zipWith (\n s -> "g" ++ show n ++ " = " ++ s) [1..]
+    addIds = zipWith (\n s -> "p" ++ show n ++ " = " ++ s) [(1 :: Int)..]
 
 toIntLog :: Log String -> (Log Int, Set Int, Int -> String)
 toIntLog log = (intLog, Set.map a2i alphabet, i2a)
