@@ -10,14 +10,14 @@ data Options = Options
     { optSplit    :: Bool
     , optInput    :: IO String
     , optOutput   :: String -> IO ()
-    , optReport  :: Bool
+    , optReport   :: Bool
     }
 
 defaultOptions    = Options
     { optSplit    = False
     , optInput    = getContents
     , optOutput   = putStr
-    , optReport  = False
+    , optReport   = False
     }
 
 options :: [OptDescr (Options -> IO Options)]
