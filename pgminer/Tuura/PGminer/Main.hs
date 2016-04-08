@@ -1,6 +1,5 @@
 module Tuura.PGminer.Main (main) where
 
-import Control.Monad
 import Data.List
 import qualified Data.Map as Map
 import Data.Set (Set)
@@ -36,8 +35,8 @@ main = do
                  Set.fromList [ (x, y) | x <- events, y <- events, x <= y ]
         co a b = cache Map.! (min a b, max a b)
         graphs = map (fmap decode) $ reduceLog co log
-        expressions = unlines . addIds $ map printGraphExpr graphs
-    optOutput options expressions
-    when (optReport options) $
-        optOutput options $ "\nConcurrent pairs: " ++ show
-            [ (decode x, decode y) | (x:xs) <- tails events, y <- xs, x `co` y ]
+        result = unlines . addIds $ map printGraphExpr graphs
+    if optReport options
+    then optOutput options $ result ++ "\nConcurrent pairs: " ++ show
+        [ (decode x, decode y) | (x:xs) <- tails events, y <- xs, x `co` y ]
+    else optOutput options result

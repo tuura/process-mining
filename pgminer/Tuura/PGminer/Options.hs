@@ -27,8 +27,8 @@ options =
       (NoArg (\opts -> return opts { optReport = True }))
       "Print a list of concurrent pairs"
     , Option ['o'] ["output"]
-      (ReqArg (\f opts -> return opts { optOutput = writeFile f}) "FILE")
-      "Output file"
+      (ReqArg (\f opts -> return opts { optOutput = writeFile f }) "FILE")
+      "Write output to a file"
     , Option ['s'] ["split"]
       (NoArg (\opts -> return $ opts { optSplit = True }))
       "Split traces with multiple event occurrences"
@@ -41,10 +41,9 @@ getOptions = do
     argv   <- getArgs
     result <- case getOpt Permute options argv of
         (opts, [] , []  ) -> foldlM (flip id) defaultOptions opts
-        (opts, [f], []  ) -> foldlM (flip id) defaultOptions
-                             { optInput = readFile f } opts
-        (_   , _  , []  ) -> ioError . userError $
-                             "Multiple input files"
+        (opts, [f], []  ) -> foldlM (flip id)
+                             defaultOptions { optInput = readFile f } opts
+        (_   , _  , []  ) -> ioError $ userError "Multiple input files"
         (_   , _  , errs) -> ioError . userError $ concat errs
     when (optHelp result) $ do
         progName <- getProgName
