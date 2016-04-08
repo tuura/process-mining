@@ -52,7 +52,8 @@ executable pgminer
     GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
 
 executable macroscope
-    main-is:          macroscope.hs
+    hs-source-dirs:   macroscope
+    main-is:          Main.hs
     build-depends:    base >= 4.7 && < 5,
                       containers == 0.5.*,
                       pgminer

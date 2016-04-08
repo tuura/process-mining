@@ -1,7 +1,10 @@
-import Tuura.Log
-import Tuura.Macro
+module Tuura.Macroscope.Main (main) where
+
 import Data.Set (Set)
 import qualified Data.Set as Set
+
+import Tuura.Log
+import Tuura.Macro
 
 -- TODO: Get rid of code duplication (see pgminer.hs).
 toIntTrace :: Trace String -> (Trace Int, Set Int, Int -> String)
