@@ -22,7 +22,6 @@ library
                       Tuura.Log,
                       Tuura.Macro,
                       Tuura.Relation
-                      Tuura.CmdLineFlags
     build-depends:    array == 0.5.*,
                       base >= 4.7 && < 5,
                       filepath,
@@ -42,7 +41,8 @@ test-suite pgminer-test
     GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
 
 executable pgminer
-    main-is:          pgminer.hs
+    hs-source-dirs:   pgminer
+    main-is:          Main.hs
     build-depends:    base >= 4.7 && < 5,
                       containers == 0.5.*,
                       filepath,
