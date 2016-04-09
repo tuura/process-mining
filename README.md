@@ -18,7 +18,7 @@ Navigate to a directory to store PGminer and use this command to clone the code:
 Enter the process-mining directory and compile PGminer using the following command:
 
 ```bash
-ghc --make -isrc -O2 pgminer.hs
+ghc --make -isrc -ipgminer -O2 pgminer/Main.hs -o pgminer
 ```
 
 This will produce a PGminer executable.
