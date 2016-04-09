@@ -28,7 +28,7 @@ library
                       containers == 0.5.*
     default-language: Haskell2010
     other-extensions: TypeFamilies
-    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
+    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs -O2
 
 test-suite pgminer-test
     type:             exitcode-stdio-1.0
@@ -49,7 +49,7 @@ executable pgminer
                       pgminer
     other-extensions: TypeFamilies
     default-language: Haskell2010
-    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
+    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs -O2
 
 executable macroscope
     hs-source-dirs:   macroscope
@@ -59,4 +59,4 @@ executable macroscope
                       pgminer
     other-extensions: TypeFamilies
     default-language: Haskell2010
-    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs
+    GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs -O2
