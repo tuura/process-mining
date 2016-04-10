@@ -17,8 +17,8 @@ toIntTrace tr = (intTrace, Set.map a2i alphabet, i2a)
 
 main :: IO ()
 main = do
-    trace <- words <$> getLine
-    let (intTrace, alphabet, decode) = toIntTrace trace
+    tr <- words <$> getLine
+    let (intTrace, alphabet, decode) = toIntTrace tr
         result   = macroTrace (Set.elems alphabet) intTrace
-    mapM_ (print . fmap decode) $ fst result
-    putStrLn $ "Total weight = " ++ show (snd result)
+    mapM_ (print . fmap decode) $ trace result
+    putStrLn $ "Total weight = " ++ show (totalWeight result)
