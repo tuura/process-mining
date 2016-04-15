@@ -1,24 +1,29 @@
 module Tuura.Macroscope.Main (main) where
 
-import Data.Set (Set)
-import qualified Data.Set as Set
+import Data.List.Extra
 
-import Tuura.Log
 import Tuura.Macro
 
--- TODO: Get rid of code duplication (see pgminer.hs).
-toIntTrace :: Trace String -> (Trace Int, Set Int, Int -> String)
-toIntTrace tr = (intTrace, Set.map a2i alphabet, i2a)
+data Event a = Event a Double deriving Show
+
+instance Eq a => Eq (Event a) where
+    Event a _ == Event b _ = a == b
+
+instance Ord a => Ord (Event a) where
+    compare (Event a _) (Event b _) = compare a b
+
+instance HasDuration (Event a) where
+    duration (Event _ d) = d
+
+event :: String -> Event String
+event s = Event a (read d)
   where
-    alphabet = events [tr]
-    a2i s    = Set.findIndex s alphabet
-    i2a i    = Set.elemAt i alphabet
-    intTrace = map a2i tr
+    [a, d] = words s
 
 main :: IO ()
 main = do
-    tr <- words <$> getLine
-    let (intTrace, alphabet, decode) = toIntTrace tr
-        result   = macroTrace (Set.elems alphabet) intTrace
-    mapM_ (print . fmap decode) $ trace result
+    tr <- (map event . lines) <$> getContents
+    let alphabet = nubOrd $ sort tr
+        result   = macroTrace alphabet tr
+    mapM_ print $ trace result
     putStrLn $ "Total weight = " ++ show (totalWeight result)
