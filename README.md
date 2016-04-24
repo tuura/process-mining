@@ -3,23 +3,30 @@
 
 This is a collection of algorithms and command line tools for process mining that use Conditional Partial Order Graphs (and more generally Parameterised Graphs) as the underlying modelling formalism.
 
-## Concurrency extraction with PGminer
+## Getting the sources
 
-PGminer is a tool for extracting concurrency from event logs. It takes a set of event traces, detects potentially concurrent events, and produces a set of partial orders, to be further compressed into a Conditional Partial Order Graph.
-
-### Getting the sources
-
-Navigate to a directory to store PGminer and use this command to clone the code:
+Navigate to a directory to store the library and run this command to clone the code:
 
 `git clone https://github.com/tuura/process-mining.git`
 
-### Building PGminer
+## Building command line tools
 
 Enter the process-mining directory and compile PGminer using the following command:
 
 ```bash
 ghc --make -isrc -ipgminer -O2 pgminer/Main.hs -o pgminer
 ```
+
+Similarly, to build Macroscope, run the following command:
+```bash
+ghc --make -isrc -imacroscope -O2 macroscope/Main.hs -o macroscope
+```
+
+Also see [instructions on building with Cabal](https://github.com/tuura/process-mining#building-testing-and-running-with-cabal).
+
+## Concurrency extraction with PGminer
+
+PGminer is a tool for extracting concurrency from event logs. It takes a set of event traces, detects potentially concurrent events, and produces a set of partial orders, to be further compressed into a Conditional Partial Order Graph.
 
 This will produce a PGminer executable.
 
@@ -80,7 +87,7 @@ p3 = a -> c + b -> d + c -> b
 
 ## Building, testing and running with Cabal
 
-You can build the library and PGminer using Cabal. We intend to release the sources on Hackage in the near future.
+You can build the library and executables using Cabal. We intend to release the sources on Hackage in the near future.
 
 ### Build
 
