@@ -25,7 +25,7 @@ library
                       Tuura.Function
     build-depends:    array == 0.5.*,
                       base >= 4.7 && < 5,
-                      extra == 1.4.*,
+                      extra >= 1.4,
                       filepath,
                       containers == 0.5.*
     default-language: Haskell2010
@@ -49,6 +49,8 @@ executable pgminer
                       containers == 0.5.*,
                       filepath,
                       process-mining
+    other-modules:    Tuura.PGminer.Main,
+                      Tuura.PGminer.Options
     other-extensions: TypeFamilies
     default-language: Haskell2010
     GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs -O2
@@ -58,8 +60,9 @@ executable macroscope
     main-is:          Main.hs
     build-depends:    base >= 4.7 && < 5,
                       containers == 0.5.*,
-                      extra == 1.4.*,
+                      extra >= 1.4,
                       process-mining
+    other-modules:    Tuura.Macroscope.Main
     other-extensions: TypeFamilies
     default-language: Haskell2010
     GHC-options:      -Wall -fno-warn-name-shadowing -fwarn-tabs -O2

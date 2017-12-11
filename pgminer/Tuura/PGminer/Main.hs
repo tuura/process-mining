@@ -37,9 +37,9 @@ main = do
         co a b = cache Map.! (min a b, max a b)
         graphs = map (fmap decode) $ reduceLog co log
         result = if (optBool options /= "")
-            then unwords . intersperse "|" $ printBooleanFunction (optBool options) graphs
+            then (unwords . intersperse "|" $ printBooleanFunction (optBool options) graphs) ++ "\n"
             else unlines . addIds $ map printGraphExpr graphs
     if optReport options
     then optOutput options $ result ++ "\nConcurrent pairs: " ++ show
         [ (decode x, decode y) | (x:xs) <- tails events, y <- xs, x `co` y ]
-    else optOutput options (result ++ "\n")
+    else optOutput options result
