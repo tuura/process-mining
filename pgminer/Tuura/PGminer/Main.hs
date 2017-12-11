@@ -7,6 +7,7 @@ import qualified Data.Set as Set
 
 import Tuura.Concurrency
 import Tuura.Graph
+import Tuura.Function
 import Tuura.Log
 import Tuura.PGminer.Options
 
@@ -35,8 +36,10 @@ main = do
                  Set.fromList [ (x, y) | x <- events, y <- events, x <= y ]
         co a b = cache Map.! (min a b, max a b)
         graphs = map (fmap decode) $ reduceLog co log
-        result = unlines . addIds $ map printGraphExpr graphs
+        result = if (optBool options /= "")
+            then unwords . intersperse "|" $ printBooleanFunction (optBool options) graphs
+            else unlines . addIds $ map printGraphExpr graphs
     if optReport options
     then optOutput options $ result ++ "\nConcurrent pairs: " ++ show
         [ (decode x, decode y) | (x:xs) <- tails events, y <- xs, x `co` y ]
-    else optOutput options result
+    else optOutput options (result ++ "\n")
