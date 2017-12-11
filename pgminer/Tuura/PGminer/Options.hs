@@ -11,7 +11,8 @@ data Options = Options
     , optInput  :: IO String
     , optOutput :: String -> IO ()
     , optReport :: Bool
-    , optSplit  :: Bool }
+    , optSplit  :: Bool
+    , optBool   :: String}
 
 defaultOptions :: Options
 defaultOptions  = Options
@@ -19,7 +20,8 @@ defaultOptions  = Options
     , optInput  = getContents
     , optOutput = putStr
     , optReport = False
-    , optSplit  = False }
+    , optSplit  = False
+    , optBool   = "" }
 
 options :: [OptDescr (Options -> IO Options)]
 options =
@@ -32,6 +34,9 @@ options =
     , Option ['s'] ["split"]
       (NoArg (\opts -> return $ opts { optSplit = True }))
       "Split traces with multiple event occurrences"
+    , Option ['b'] ["bool"]
+      (ReqArg (\f opts -> return opts { optBool = f}) "STRING")
+      "Output variable"
     , Option ['h'] ["help"]
       (NoArg (\opts -> return $ opts { optHelp = True }))
       "Show this help message" ]
