@@ -18,16 +18,16 @@ foldFunction :: b -> (String -> b) -> (b -> b -> b) -> (b -> b -> b) -> String -
 foldFunction e v o c s ge = case ge of
         Empty       -> e
         Vertex x    -> v x
-        Overlay x y -> if test s x
-            then if test s y
-                then o (foldFunction e v o c s x) (foldFunction e v o c s y)
-                else foldFunction e v o c s x
-            else if test s y
-                then foldFunction e v o c s y
-                else e
-        Connect x y -> if test s (Connect x y)
-            then c (foldFunction e v o c s x) (foldFunction e v o c s y)
-            else e
+        Overlay x y -> case test s x of
+            True  -> case test s y of
+              True  -> o (foldFunction e v o c s x) (foldFunction e v o c s y)
+              False -> foldFunction e v o c s x
+            False -> case test s y of
+              True  -> foldFunction e v o c s y
+              False -> e
+        Connect x y -> case test s (Connect x y) of
+            True  -> c (foldFunction e v o c s x) (foldFunction e v o c s y)
+            False -> e
 
 data Function = Open String | Closed String deriving (Eq, Ord)
 
