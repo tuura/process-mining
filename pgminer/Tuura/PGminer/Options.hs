@@ -36,7 +36,7 @@ options =
       "Split traces with multiple event occurrences"
     , Option ['b'] ["bool"]
       (ReqArg (\f opts -> return opts { optBool = f}) "STRING")
-      "Output variable"
+      "Variable for which a boolean function should be generated"
     , Option ['h'] ["help"]
       (NoArg (\opts -> return $ opts { optHelp = True }))
       "Show this help message" ]
