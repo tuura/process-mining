@@ -36,9 +36,9 @@ main = do
                  Set.fromList [ (x, y) | x <- events, y <- events, x <= y ]
         co a b = cache Map.! (min a b, max a b)
         graphs = map (fmap decode) $ reduceLog co log
-        result = if (optBool options /= "")
-            then (unwords . intersperse "|" $ printBooleanFunction (optBool options) graphs) ++ "\n"
-            else unlines . addIds $ map printGraphExpr graphs
+        result = case (optBool options) of
+            "" -> unlines . addIds $ map printGraphExpr graphs
+            _  -> (unwords . intersperse "|" $ printBooleanFunction (optBool options) graphs) ++ "\n"
     if optReport options
     then optOutput options $ result ++ "\nConcurrent pairs: " ++ show
         [ (decode x, decode y) | (x:xs) <- tails events, y <- xs, x `co` y ]
