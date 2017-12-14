@@ -119,7 +119,7 @@ a- b- c-
 
 Each line of this is the simulation trace of a circuit, identifying the order in which signals transition. This can be mined by PGminer, identifying concurrency. A common variable (or signal) in each of these traces is `c`. In some cases, signals transition high (identified by `+`) and in others, they transition low (`-`). Some signals must transition in either of these directions in order to cause the signal `c` to transition.
 
-We can use PGminer to produce Boolean functions, one for `c+` and one for `c-`. These functions will identify the way signals `a` and `b` must have transitioned in order for the given `c` transition to occur, using AND (`*`) and OR (`|`) functions.
+We can use PGminer to produce Boolean functions, one for `c+` and one for `c-`. These functions will identify the way signals `a` and `b` must have transitioned in order for the given `c` transition to occur, using AND (`&`) and OR (`|`) functions.
 
 To mine this specification and produce a Boolean function, we must use the `-b` or `--bool` flag, and provide a signal transition for which the generated Boolean function will cause. First of all, for `c+` we run:
 
@@ -130,10 +130,10 @@ stack exec pgminer -- L3.log -b c+
 This will produce the following function:
 
 ```
-a+ * b+ | a+ | b+
+a & b | a | b
 ```
 
-This states that, either `a+` AND `b+` must have occured, OR `a+` only must have occured, OR `b+` only must have occured, in order for `c+` to occur. This is not the most simplified Boolean function, but this is a correct function, and tools such as [Plato](https://github.com/tuura/plato) will simplify this further.
+This states that, either `a` AND `b` must be high, OR `a` only must be high, OR `b` only must be high, in order for `c+` to occur. This is not the most simplified Boolean function, but this is a correct function, and tools such as [Plato](https://github.com/tuura/plato) will simplify this further.
 
 To generate a function for `c-`, we use a similar command as for `c+`:
 
@@ -144,10 +144,10 @@ stack exec pgminer -- L3.log -b c-
 The result will be the following function:
 
 ```
-a- * b-
+a' & b'
 ```
 
-This states that, in order for `c-` to occur, both `a-` AND `b-` must have occurred.
+This states that, in order for `c-` to occur, both `a` AND `b` must be low.
 
 ## Building, testing and running with Stack
 
