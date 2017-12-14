@@ -9,14 +9,14 @@ import Tuura.Graph
 instance Graph Function where
     type Vertex Function = String
     empty       = Closed ""
-    vertex v    = Closed . var $ id v
+    vertex v    = Closed $ var v
     overlay p q = Open $ printFunction p ++ " & " ++ printFunction q
     connect p _ = Closed $ printFunction p
 
 var :: [Char] -> [Char]
 var v
   | "+" `isSuffixOf` v = init v
-  | "-" `isSuffixOf` v = (init v) ++ "'"
+  | "-" `isSuffixOf` v = init v ++ "'"
   | otherwise          = v
 
 foldFunction :: b -> (String -> b) -> (b -> b -> b) -> (b -> b -> b) -> String -> GraphExpr String -> b
