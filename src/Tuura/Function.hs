@@ -3,16 +3,21 @@ module Tuura.Function (
     printBooleanFunction
     ) where
 
+import Data.List
 import Tuura.Graph
-
--- data Function = Open String | Closed String deriving (Eq, Ord)
 
 instance Graph Function where
     type Vertex Function = String
     empty       = Closed ""
-    vertex      = Closed . id
-    overlay p q = Open $ printFunction p ++ " * " ++ printFunction q
+    vertex v    = Closed . var $ id v
+    overlay p q = Open $ printFunction p ++ " & " ++ printFunction q
     connect p _ = Closed $ printFunction p
+
+var :: [Char] -> [Char]
+var v
+  | "+" `isSuffixOf` v = init v
+  | "-" `isSuffixOf` v = (init v) ++ "'"
+  | otherwise          = v
 
 foldFunction :: b -> (String -> b) -> (b -> b -> b) -> (b -> b -> b) -> String -> GraphExpr String -> b
 foldFunction e v o c s ge = case ge of
