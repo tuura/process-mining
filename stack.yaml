@@ -1,3 +1,3 @@
 packages:
-- location: .
-resolver: lts-9.18
+- .
+resolver: lts-12.0
